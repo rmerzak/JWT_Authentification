@@ -18,11 +18,9 @@ const registerUser = asyncHandler (async (req, res) => {
         res.status(400);
         throw new Error('User already exists');
     }
-
     // Hash Password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
     const user = await User.create({
         name,
         email,
@@ -45,6 +43,16 @@ const registerUser = asyncHandler (async (req, res) => {
 
     res.json({message: 'Register User'});
 })
+
+
+/*
+Must ask about:
+                 what happen after generating the token?
+                 what is Bearer shema?
+                 what is pipeline request-responce?
+                 can you do some recoding with me ? structure of the project ask some question about some function?
+
+*/
 
 const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
@@ -75,7 +83,6 @@ const generateToken = (id) => {
 }
 const getMe = asyncHandler( async (req, res) => {
     const {_id, name, email} = await User.findById(req.user.id);
-
     res.status(200).json({
         id:_id,
         name,

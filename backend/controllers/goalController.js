@@ -7,7 +7,6 @@ const Goal = require('../models/goalModel')
 // @access  Private
 const getGoals = asyncHandler(async (req, res) => {
   const goals = await Goal.find({user: req.user.id})
-
   res.status(200).json(goals)
 })
 
@@ -38,9 +37,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Goal not found')
   }
-
   const user = await User.findById(req.user.id);
-
   if (!user) {
     res.status(401);
     throw new Error('user not found')
@@ -53,8 +50,6 @@ const updateGoal = asyncHandler(async (req, res) => {
   const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   })
-
-
   res.status(200).json(updatedGoal)
 })
 

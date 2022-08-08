@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {FaUser} from 'react-icons/fa'
 import {register, reset} from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 function Register() {
     const [formData, setFormData] = useState({
         name: '',
@@ -14,9 +15,24 @@ function Register() {
     const {name, email, password, password2} = formData;
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {user, isLoading, isError, isSuccess, message} = useSelector(()=> {
+    const {user, isLoading, isError, isSuccess, message} = useSelector(
         (state) => state.auth
-    })
+    )
+    useEffect(() => {
+        console.log(user);
+        console.log(isSuccess);
+        if (isError) {
+            toast.error(message)
+        }
+        if (isSuccess || user) {
+            navigate('/')
+        }
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+
+
+
     const onchange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -37,12 +53,16 @@ function Register() {
             dispatch(register(userData))
         }
     }
-  return <>
+    if (isLoading)
+    {
+        return <Spinner />
+    }
+  return (<>
   <section className='heading'>
       <h1>
           <FaUser/> Register
       </h1>
-      <p>Pleaser create an acount</p>
+      <p>Please create an acount</p>
   </section>
   <section className='form'>
       <form onSubmit={onSubmit}>
@@ -63,7 +83,7 @@ function Register() {
           </div>
       </form>
   </section>
-  </>
+  </>)
 }
 
 export default Register
