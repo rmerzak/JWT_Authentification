@@ -3,7 +3,9 @@ import axios from 'axios'
 const API_URL = '/api/users/'
 
 //Register user
-
+/**
+ * error : if a user is already in the database 
+*/
 const register = async (userData) => {
     const responce = await axios.post(API_URL, userData)
 
@@ -15,7 +17,7 @@ const register = async (userData) => {
 }
 
 
-//login user
+//login user 
 
 const login = async (userData) => {
     const responce = await axios.post(API_URL + 'login', userData)
