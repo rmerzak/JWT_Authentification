@@ -36,6 +36,7 @@ const logout = () => {
 const authService = {
     login,
     logout,
-    login
+    login,
+    register
 }
 export default authService
