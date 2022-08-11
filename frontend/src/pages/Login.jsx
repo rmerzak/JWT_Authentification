@@ -17,8 +17,6 @@ function Login() {
         (state) => state.auth
     )
     useEffect(() => {
-        console.log(user);
-        console.log(isSuccess);
         if (isError) {
             toast.error(message)
         }
